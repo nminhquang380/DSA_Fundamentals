@@ -120,10 +120,10 @@ A stack uses LIFO (last-in first-out) ordering. That is, as in a stack of dinner
 added to the stack is the first item to be removed. 
 
 It uses the following operations: 
-• pop(): Remove the top item from the stack. 
-• push( item) : Add an item to the top of the stack. 
-• peek ( ): Return the top of the stack. 
-• is£mpty() : Return true if and only if the stack is empty. 
+* pop(): Remove the top item from the stack. 
+* push( item) : Add an item to the top of the stack. 
+* peek ( ): Return the top of the stack. 
+* is£mpty() : Return true if and only if the stack is empty. 
 
 Unlike an array, a stack does not offer constant-time access to the it h item. However, it does allow constant￾time adds and removes, as it doesn't require shifting elements around. 
 
@@ -138,10 +138,10 @@ A queue implements FIFO (first-in first-out) ordering. As in a line or queue at 
 removed from the data structure in the same order that they are added.
 
 It uses the operations: 
-• add (item) : Add an item to the end of the list. 
-• remove(): Remove the first item in the list. 
-• peek(): Return the top of the queue. 
-• isEmpty() : Return true if and only if the queue is empty. 
+* add (item) : Add an item to the end of the list. 
+* remove(): Remove the first item in the list. 
+* peek(): Return the top of the queue. 
+* isEmpty() : Return true if and only if the queue is empty. 
 
 One place where queues are often used is in breadth-first search or in implementing a cache. 
 
@@ -150,10 +150,10 @@ One place where queues are often used is in breadth-first search or in implement
 
 A nice way to understand a tree is with a recursive explanation, A tree is a data structure composed of 
 nodes:
-• Each tree has a root node, (Actually, this isn't strictly necessary in graph theory, but it's usually how we 
+* Each tree has a root node, (Actually, this isn't strictly necessary in graph theory, but it's usually how we 
 use trees in programming, and especially programming interviews.) 
-• The root node has zero or more child nodes. 
-• Each child node has zero or more child nodes, and so on.
+* The root node has zero or more child nodes. 
+* Each child node has zero or more child nodes, and so on.
 
 1. Binary Trees
     A binary tree is a tree in which each node has up to two children.
@@ -233,3 +233,60 @@ rightmost element). Then, we bubble down this element, swapping it with one of i
 This algorithm will also take O( log_n) time. 
 
 ### Graphs
+A graph is simply a collection of nodes with edges between (some of) them. 
+* Graphs can be either directed (like the following graph) or undirected. While directed edges are like a 
+one-way street, undirected edges are like a two-way street. 
+* The graph might consist of multiple isolated subgraphs. If there is a path between every pair of vertices, 
+it is called a "connected graph." 
+* The graph can also have cycles (or not). An "acyclic graph" is one without cycles. 
+
+**Adjacency List**
+This is the most common way to represent a graph. Every vertex (or node) stores a list of adjacent vertices. 
+In an undirected graph, an edge like (a , b) would be stored twice: once in a's adjacent vertices and once 
+in b s adjacent vertices. 
+
+**Adjacency Matrices**
+An adjacency matrix is an NxN boolean matrix (where N is the number of nodes), where a true value at 
+matrix[i][j] indicates an edge from node i to node j. (You can also use an integer matrix with Os and 
+1s.) 
+
+**Graph Search**
+The two most common ways to search a graph are **depth-first search and breadth-first searc**h. 
+
+In **depth-first search (DFS)**, we start at the root (or another arbitrarily selected node) and explore each 
+branch completely before moving on to the next branch. That is, we go deep first (hence the name depth first search)
+before we go wide.
+<code>
+1 void search(Node root) { 
+2 if (roo t == null ) return ; 
+3 visit(root) ; 
+4 root.visite d = true ; 
+5 fo r each (Node n in root.adjacent) { 
+6 if (n.visite d == false ) { 
+7 search(n); 
+8 > 
+9 > 
+10 > 
+</code>
+
+In **breadth-first search (BFS)**, we start at the root (or another arbitrarily selected node) and explore each 
+neighbor before going on to any of their children. That is, we go wide (hence breadth-first search) before 
+we go deep. 
+<code>
+1 void search(Node root) { 
+2 Queue queue = new Queue(); 
+3 root.marked = true ; 
+4 queue.enqueue(root); II Add to the end of queue 
+5 
+6 while (Iqueue.isEmptyO) { 
+7 Node r « queue.dequeue(); // Remove from the fron t of the queue 
+8 visit(r) ; 
+9 foreach (Node n in r.adjacent) { 
+10 if (n.marked == false ) { 
+11 n.marked = true ; 
+12 queue.enqueue(n); 
+13 > 
+14 } 
+15 > 
+16 > 
+</code>
