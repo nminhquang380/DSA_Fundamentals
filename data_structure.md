@@ -114,25 +114,25 @@ singly linked list or a doubly linked list.
 ### Singly and Doubly Linked List 
 In a singly linked list, each node has a link only to the next node in the sequence. The last node in the list points to null, indicating the end of the list. Here's an example of a singly linked list:
 
->    Node1       Node2       Node3       Node4
->  +-------+   +-------+   +-------+   +-------+
->  |  5    |   |  10   |   |  15   |   |  20   |
->  | next -|--▶| next -|--▶| next -|--▶| null  |
->  +-------+   +-------+   +-------+   +-------+
+>    Node1       Node2       Node3       Node4 <br>
+>  +-------+   +-------+   +-------+   +-------+ <br>
+>  |  5    |   |  10   |   |  15   |   |  20   | <br>
+>  | next -|--▶| next -|--▶| next -|--▶| null  | <br>
+>  +-------+   +-------+   +-------+   +-------+ <br>
 
 In a doubly linked list, each node has links to both the next node and the previous node in the sequence. The first node's previous link and the last node's next link point to null. Here's an example of a doubly linked list:
 
->    Node1       Node2       Node3       Node4
->  +-------+   +-------+   +-------+   +-------+
->  |  5    |   |  10   |   |  15   |   |  20   |
->  | prev -|◀--| next -|--▶| next -|--▶| null  |
->  | next -|--▶| prev -|◀--| prev -|◀--|       |
->  +-------+   +-------+   +-------+   +-------+
+>    Node1       Node2       Node3       Node4 <br>
+>  +-------+   +-------+   +-------+   +-------+ <br>
+>  |  5    |   |  10   |   |  15   |   |  20   | <br>
+>  | prev -|◀--| next -|--▶| next -|--▶| null  | <br>
+>  | next -|--▶| prev -|◀--| prev -|◀--|       | <br>
+>  +-------+   +-------+   +-------+   +-------+ <br>
 
 
 ### Deleting a Node from a Singly Linked List
 Deleting a node from a linked list is fairly straightforward. Given a node n, we find the previous node pre v 
-and set prev . nex t equal to n. next . If the list is doubly linked, we must also update n. nex t to set 
+and set prev . nex t equal to n. next . If the list is doubly linked, we must also update n.next to set 
 n .next . pre v equal to n. prev . The important things to remember are (1) to check for the null pointer 
 and (2) to update the head or tail pointer as necessary. 
 ```
@@ -307,7 +307,7 @@ matrix[i][j] indicates an edge from node i to node j. (You can also use an integ
 1s.) 
 
 **Graph Search**
-The two most common ways to search a graph are **depth-first search and breadth-first searc**h. 
+The two most common ways to search a graph are **depth-first search and breadth-first search**. 
 
 In **depth-first search (DFS)**, we start at the root (or another arbitrarily selected node) and explore each 
 branch completely before moving on to the next branch. That is, we go deep first (hence the name depth first search)
