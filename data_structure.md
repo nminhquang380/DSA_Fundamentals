@@ -11,6 +11,41 @@ array_length. Two different hash codes could, of course, map to the same index.
 linked list because of collisions: you could have two different keys with the same hash code, or two different 
 hash codes that map to the same index. 
 
+```
+class HashTable:
+    def __init__(self):
+        self.size = 10
+        self.table = [[] for _ in range(self.size)]
+
+    def _hash_function(self, key):
+        return hash(key) % self.size
+
+    def insert(self, key, value):
+        hash_value = self._hash_function(key)
+        slot = self.table[hash_value]
+        for i, (k, v) in enumerate(slot):
+            if k == key:
+                slot[i] = (key, value)  # Update value if key already exists
+                return
+        slot.append((key, value))  # Add new key-value pair
+
+    def delete(self, key):
+        hash_value = self._hash_function(key)
+        slot = self.table[hash_value]
+        for i, (k, _) in enumerate(slot):
+            if k == key:
+                del slot[i]  # Delete key-value pair if key is found
+                return
+
+    def get(self, key):
+        hash_value = self._hash_function(key)
+        slot = self.table[hash_value]
+        for k, v in slot:
+            if k == key:
+                return v  # Return value if key is found
+        return None  # Return None if key is not found
+```
+
 To retrieve the value pair by its key, you repeat this process. Compute the hash code from the key, and then 
 compute the index from the hash code. Then, search through the linked list for the value with this key. 
 
@@ -32,26 +67,45 @@ A linked list is a data structure that represents a sequence of nodes. In a sing
 points to the next node in the linked list. A doubly linked list gives each node pointers to both the next 
 node and the previous node. 
 ### Creating a Linked List
-The code below implements a very basic singly linked list. 
-<code>
-    1 clas s Node { 
-    2 Node next = null; 
-    3 int data; 
-    4 
-    5 public Node(int d) { 
-    6 data = d; 
-    7 } 
-    8 
-    9 void appendToTail(int d) { 
-    16 Node end = new Node(d); 
-    11 Node n = this; 
-    12 while {n.next 1= null) { 
-    13 n = n.next; 
-    14 > 
-    15 n.next = end; 
-    16 > 
-    17 > 
-</code>
+The code below implements a very basic singly linked list.
+
+```
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class LinkedList:
+    def __init__(self):
+        self.head = None
+
+    def is_empty(self):
+        return self.head is None
+
+    def append(self, data):
+        new_node = Node(data)
+        if self.is_empty():
+            self.head = new_node
+        else:
+            current = self.head
+            while current.next:
+                current = current.next
+            current.next = new_node
+
+    def prepend(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+        self.head = new_node
+
+    def search(self, data):
+        current = self.head
+        while current:
+            if current.data == data:
+                return True
+            current = current.next
+        return False
+```
+
 We could, if we chose, implement a LinkedLis t class that wraps the Node class. This would essentially 
 just have a single member variable: the head Node.This would largely resolve the earlier issue. 
 
@@ -59,43 +113,44 @@ Remember that when you're discussing a linked list in an interview, you must und
 singly linked list or a doubly linked list. 
 ### Singly and Doubly Linked List 
 In a singly linked list, each node has a link only to the next node in the sequence. The last node in the list points to null, indicating the end of the list. Here's an example of a singly linked list:
-    Node1       Node2       Node3       Node4
-  +-------+   +-------+   +-------+   +-------+
-  |  5    |   |  10   |   |  15   |   |  20   |
-  | next -|--▶| next -|--▶| next -|--▶| null  |
-  +-------+   +-------+   +-------+   +-------+
+
+>    Node1       Node2       Node3       Node4
+>  +-------+   +-------+   +-------+   +-------+
+>  |  5    |   |  10   |   |  15   |   |  20   |
+>  | next -|--▶| next -|--▶| next -|--▶| null  |
+>  +-------+   +-------+   +-------+   +-------+
 
 In a doubly linked list, each node has links to both the next node and the previous node in the sequence. The first node's previous link and the last node's next link point to null. Here's an example of a doubly linked list:
-    Node1       Node2       Node3       Node4
-  +-------+   +-------+   +-------+   +-------+
-  |  5    |   |  10   |   |  15   |   |  20   |
-  | prev -|◀--| next -|--▶| next -|--▶| null  |
-  | next -|--▶| prev -|◀--| prev -|◀--|       |
-  +-------+   +-------+   +-------+   +-------+
+
+>    Node1       Node2       Node3       Node4
+>  +-------+   +-------+   +-------+   +-------+
+>  |  5    |   |  10   |   |  15   |   |  20   |
+>  | prev -|◀--| next -|--▶| next -|--▶| null  |
+>  | next -|--▶| prev -|◀--| prev -|◀--|       |
+>  +-------+   +-------+   +-------+   +-------+
+
 
 ### Deleting a Node from a Singly Linked List
 Deleting a node from a linked list is fairly straightforward. Given a node n, we find the previous node pre v 
 and set prev . nex t equal to n. next . If the list is doubly linked, we must also update n. nex t to set 
 n .next . pre v equal to n. prev . The important things to remember are (1) to check for the null pointer 
 and (2) to update the head or tail pointer as necessary. 
-<code>
-    1 Mode deleteNode(Node head, in t d) { 
-    2 Node n = head; 
-    3 
-    4 if (n.data == d) { 
-    5 retur n head.next; /* moved head */ 
-    6 > 
-    7 
-    8 while (n.next != null) { 
-    9 if (n.next.data == d) { 
-    10 n.next = n.next.next ; 
-    11 retur n head; /* head didn' t change */ 
-    12 } 
-    13 n = n.next ; 
-    14 } 
-    15 return head; 
-    16 > 
-</code>
+```
+    def delete(self, data):
+        if self.is_empty():
+            return
+
+        if self.head.data == data:
+            self.head = self.head.next
+            return
+
+        current = self.head
+        while current.next:
+            if current.next.data == data:
+                current.next = current.next.next
+                return
+            current = current.next
+```
 
 ### The Runner Technique
 **The "runner"** (or second pointer) technique is used in many linked list problems. The runner technique 
@@ -121,8 +176,8 @@ added to the stack is the first item to be removed.
 
 It uses the following operations: 
 * pop(): Remove the top item from the stack. 
-* push( item) : Add an item to the top of the stack. 
-* peek ( ): Return the top of the stack. 
+* push(item) : Add an item to the top of the stack. 
+* peek(): Return the top of the stack. 
 * is£mpty() : Return true if and only if the stack is empty. 
 
 Unlike an array, a stack does not offer constant-time access to the it h item. However, it does allow constant￾time adds and removes, as it doesn't require shifting elements around. 
@@ -179,38 +234,39 @@ use trees in programming, and especially programming interviews.)
 7. In-Order Traversal
     In-order traversal means to "visit" (often, print) the left branch, then the current node, and finally, the right 
     branch. 
-    <code>
-    1 void inOrderTraversal(TreeNode node) { 
-    2 if (node != null) { 
-    3 inOrderTraversal(node.left); 
-    4 visit(node); 
-    5 inOrderTraversal(node.right); 
-    6 } 
-    7 } 
-    </code>
+```
+    def inorder_traversal(node):
+        if node is None:
+            return
 
+        inorder_traversal(node.left)
+        print(node.data, end=" ")
+        inorder_traversal(node.right)
+```
     When performed on a binary search tree, it visits the nodes in ascending order (hence the name "in-order").
 8. Pre-Order Traversal
     Pre-order traversal visits the current node before its child nodes (hence the name "pre-order").
-    <code>
-    l void preOrderTraversal(TreeNode node) { 2 if (node 1= null) { 
-    3 visit(node); 
-    4 preOrderTraversal(node,left); 
-    5 preOrderTraversal(node.right); 
-    6 } 
-    7 >
-    </code>
+```
+    def preorder_traversal(node):
+        if node is None:
+            return
+
+        print(node.data, end=" ")
+        preorder_traversal(node.left)
+        preorder_traversal(node.right)
+```
     In a pre-order traversal, the root is always the first node visited. 
 9. Post-Order Traversal
     Post-order traversal visits the current node after its child nodes (hence the name "post-order").
-    <code> 
-    1 void postOrderTraversal(TreeNocte node) ( 2 if (node 1= null) { 
-    postOrderTraversal(node.left); 
-    4 postOrderTraversal(node.right); 
-    5 visit(node); 
-    6 } 
-    7 > 
-    </code>
+```
+    def postorder_traversal(node):
+        if node is None:
+            return
+
+        postorder_traversal(node.left)
+        postorder_traversal(node.right)
+        print(node.data, end=" ")
+```
     In a post-order traversal, the root is always the last node visited. 
 ### Binary Heaps (Min and Max Heaps)
 A min-heap is a complete binary tree (that is, totally filled other than the rightmost elements on the last 
@@ -256,37 +312,7 @@ The two most common ways to search a graph are **depth-first search and breadth-
 In **depth-first search (DFS)**, we start at the root (or another arbitrarily selected node) and explore each 
 branch completely before moving on to the next branch. That is, we go deep first (hence the name depth first search)
 before we go wide.
-<code>
-1 void search(Node root) { 
-2 if (roo t == null ) return ; 
-3 visit(root) ; 
-4 root.visite d = true ; 
-5 fo r each (Node n in root.adjacent) { 
-6 if (n.visite d == false ) { 
-7 search(n); 
-8 > 
-9 > 
-10 > 
-</code>
 
 In **breadth-first search (BFS)**, we start at the root (or another arbitrarily selected node) and explore each 
 neighbor before going on to any of their children. That is, we go wide (hence breadth-first search) before 
 we go deep. 
-<code>
-1 void search(Node root) { 
-2 Queue queue = new Queue(); 
-3 root.marked = true ; 
-4 queue.enqueue(root); II Add to the end of queue 
-5 
-6 while (Iqueue.isEmptyO) { 
-7 Node r « queue.dequeue(); // Remove from the fron t of the queue 
-8 visit(r) ; 
-9 foreach (Node n in r.adjacent) { 
-10 if (n.marked == false ) { 
-11 n.marked = true ; 
-12 queue.enqueue(n); 
-13 > 
-14 } 
-15 > 
-16 > 
-</code>
